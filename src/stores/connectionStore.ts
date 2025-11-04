@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import type { ConnectionState } from '../types'
+import { useDebugStore } from './debugStore'
 
 interface ConnectionStore extends ConnectionState {
   wsUrl: string
@@ -21,16 +22,19 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
 
   connect: (url: string) => {
     const { ws } = get()
+    const debug = useDebugStore.getState()
+    
     if (ws && ws.readyState === WebSocket.OPEN) {
-      console.log('Already connected')
+      debug.info('Connection', '이미 연결되어 있습니다')
       return
     }
 
     try {
+      debug.logWSConnect(url)
       const websocket = new WebSocket(url, ['fte.v1'])
 
       websocket.onopen = () => {
-        console.log('WebSocket connected')
+        debug.info('Connection', 'WebSocket 연결 성공', { url })
         set({
           isConnected: true,
           lastConnected: Date.now(),
@@ -41,7 +45,7 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
       }
 
       websocket.onclose = () => {
-        console.log('WebSocket disconnected')
+        debug.logWSDisconnect('서버 연결 종료')
         set((state) => ({
           isConnected: false,
           reconnectAttempts: state.reconnectAttempts + 1,
@@ -52,29 +56,42 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
         setTimeout(() => {
           const { reconnectAttempts } = get()
           if (reconnectAttempts < 10) {
+            debug.info('Connection', `재연결 시도 (${reconnectAttempts + 1}/10)`)
             get().connect(url)
+          } else {
+            debug.error('Connection', '최대 재연결 시도 횟수 초과')
           }
         }, 3000)
       }
 
       websocket.onerror = (error) => {
-        console.error('WebSocket error:', error)
+        debug.logWSError(error)
         set({ error: 'Connection error' })
       }
 
       websocket.onmessage = (event) => {
-        // Handle incoming messages
-        console.log('Message received:', event.data)
+        // 수신 메시지 로깅
+        try {
+          const data = JSON.parse(event.data)
+          debug.logWSMessage('received', data)
+        } catch {
+          debug.debug('WebSocket', '바이너리 메시지 수신', { 
+            size: event.data.length 
+          })
+        }
       }
     } catch (error) {
-      console.error('Failed to connect:', error)
+      debug.error('Connection', 'WebSocket 생성 실패', error)
       set({ error: 'Failed to create WebSocket connection' })
     }
   },
 
   disconnect: () => {
     const { ws } = get()
+    const debug = useDebugStore.getState()
+    
     if (ws) {
+      debug.info('Connection', '연결 해제 요청')
       ws.close()
       set({ ws: null, isConnected: false })
     }
@@ -82,10 +99,14 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
 
   send: (data: any) => {
     const { ws, isConnected } = get()
+    const debug = useDebugStore.getState()
+    
     if (ws && isConnected) {
-      ws.send(JSON.stringify(data))
+      const payload = JSON.stringify(data)
+      debug.logWSMessage('sent', data)
+      ws.send(payload)
     } else {
-      console.error('WebSocket is not connected')
+      debug.error('Connection', 'WebSocket이 연결되어 있지 않습니다')
     }
   },
 
