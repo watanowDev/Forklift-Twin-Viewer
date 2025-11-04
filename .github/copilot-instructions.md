@@ -36,7 +36,7 @@
 
 이 프로젝트는 **클라이언트-서버 양방향 통신 구조**를 가집니다:
 
-1. **FTE (Forklift Twin Engine)**: 
+1. **FTE (Forklift Twin Engine)**:
    - Linux PC에서 실행되는 백엔드 엔진/게이트웨이
    - ROS2 기반으로 지게차의 센서 데이터를 수집하고 전처리
    - WebSocket 서버를 운영하여 FTV와 통신
