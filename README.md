@@ -67,7 +67,7 @@ Forklift Twin Viewer는 지게차 엣지 시스템에서 수집된 센서 데이
 
 이 프로젝트는 **클라이언트-서버 양방향 통신 구조**를 가집니다:
 
-1. **FTE (Forklift Twin Engine)**: 
+1. **FTE (Forklift Twin Engine)**:
    - Linux PC에서 실행되는 백엔드 엔진/게이트웨이
    - ROS2 기반으로 지게차의 센서 데이터를 수집하고 전처리
    - WebSocket 서버를 운영하여 FTV와 통신
@@ -254,30 +254,19 @@ docker build -t forklift-twin-viewer .
 docker run -p 80:80 forklift-twin-viewer
 ```
 
-## 🤝 기여
+## 📚 추가 문서
 
-프로젝트에 기여하려면:
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+- **개발 가이드**: [`DEVELOPMENT.md`](./DEVELOPMENT.md) - 프로젝트 구조 및 기술 스택 상세
+- **원격 디버깅**: [`REMOTE_DEBUG.md`](./REMOTE_DEBUG.md) - Windows-Linux 원격 개발 환경 설정
+- **디버깅 설정**: [`DEBUG_SETUP.md`](./DEBUG_SETUP.md) - VS Code 디버거 사용법
+- **정책 문서**: [`.github/copilot-instructions.md`](./.github/copilot-instructions.md) - 코딩 스타일 및 컨벤션
 
 ## 📄 라이선스
 
 이 프로젝트는 MIT 라이선스를 따릅니다. 자세한 내용은 `LICENSE` 파일을 참조하세요.
 
-## 📞 연락처
+---
 
-프로젝트 관리자 - [@watanowDev](https://github.com/watanowDev)
+**개발자**: [@watanowDev](https://github.com/watanowDev)  
+**최종 업데이트**: 2025-11-04
 
-프로젝트 링크: [https://github.com/watanowDev/Forklift-Twin-Viewer](https://github.com/watanowDev/Forklift-Twin-Viewer)
-
-## 🙏 감사의 말
-
-- [React](https://reactjs.org/)
-- [Vite](https://vitejs.dev/)
-- [Chart.js](https://www.chartjs.org/)
-- [Zustand](https://github.com/pmndrs/zustand)
-- ROS 2 Community
