@@ -1,0 +1,57 @@
+.app {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-header {
+  background-color: #1a1a1a;
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #333;
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+  margin: 0;
+  color: #646cff;
+}
+
+.app-main {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}
+
+.app-footer {
+  background-color: #1a1a1a;
+  padding: 1rem 2rem;
+  text-align: center;
+  border-top: 1px solid #333;
+  color: #888;
+  font-size: 0.9rem;
+}
+
+.connection-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+  gap: 1rem;
+}
+
+.connection-placeholder h2 {
+  color: #888;
+}
+
+.connection-placeholder p {
+  color: #666;
+}
+
+.connection-placeholder button {
+  margin-top: 1rem;
+}

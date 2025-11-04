@@ -1,0 +1,36 @@
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  background-color: #2a2a2a;
+}
+
+.status-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: #666;
+  transition: background-color 0.3s ease;
+}
+
+.connection-status.connected .status-indicator {
+  background-color: #4caf50;
+  box-shadow: 0 0 8px #4caf50;
+}
+
+.connection-status.disconnected .status-indicator {
+  background-color: #f44336;
+  box-shadow: 0 0 8px #f44336;
+}
+
+.status-info {
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+.error-text {
+  color: #f44336;
+  font-size: 0.85rem;
+}

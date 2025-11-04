@@ -1,0 +1,60 @@
+{
+  "name": "forklift-twin-viewer",
+  "version": "0.1.0",
+  "description": "Forklift Twin Engine용 실시간 데이터 시각화 및 모니터링 뷰어",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "test": "vitest",
+    "test:e2e": "playwright test",
+    "test:coverage": "vitest --coverage"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "zustand": "^4.4.7",
+    "chart.js": "^4.4.1",
+    "react-chartjs-2": "^5.2.0",
+    "protobufjs": "^7.2.5",
+    "msgpack-lite": "^0.1.26"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@types/msgpack-lite": "^0.1.11",
+    "@typescript-eslint/eslint-plugin": "^6.14.0",
+    "@typescript-eslint/parser": "^6.14.0",
+    "@vitejs/plugin-react": "^4.2.1",
+    "@vitest/ui": "^1.1.0",
+    "@playwright/test": "^1.40.1",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "typescript": "^5.2.2",
+    "vite": "^5.0.8",
+    "vitest": "^1.1.0",
+    "@vitest/coverage-v8": "^1.1.0"
+  },
+  "keywords": [
+    "forklift",
+    "digital-twin",
+    "ros2",
+    "websocket",
+    "real-time",
+    "monitoring",
+    "dashboard"
+  ],
+  "author": "watanowDev",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/watanowDev/Forklift-Twin-Viewer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/watanowDev/Forklift-Twin-Viewer/issues"
+  },
+  "homepage": "https://github.com/watanowDev/Forklift-Twin-Viewer#readme"
+}
