@@ -4,20 +4,20 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
   },
-  
+
   // TypeScript 설정
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
-  
+
   // 디버깅 설정
   "debug.javascript.usePreview": true,
   "debug.javascript.autoAttachFilter": "smart",
   "debug.javascript.unmapMissingSources": true,
-  
+
   // 소스맵 설정 - 중단점이 정확히 작동하도록
   "debug.javascript.sourceMaps": true,
   "debug.javascript.breakOnConditionalError": true,
-  
+
   // 파일 제외 설정
   "files.exclude": {
     "**/.git": true,
@@ -26,33 +26,33 @@
     "**/dist": true,
     "**/.vscode": false
   },
-  
+
   // 검색에서 제외
   "search.exclude": {
     "**/node_modules": true,
     "**/dist": true,
     "**/.git": true
   },
-  
+
   // React 개발 설정
   "emmet.includeLanguages": {
     "javascript": "javascriptreact",
     "typescript": "typescriptreact"
   },
-  
+
   // 파일 연결 설정
   "files.associations": {
     "*.css": "css",
     ".env*": "dotenv"
   },
-  
+
   // 터미널 설정
   "terminal.integrated.defaultProfile.windows": "PowerShell",
-  
+
   // Git 설정
   "git.enableSmartCommit": true,
   "git.confirmSync": false,
-  
+
   // ESLint 설정
   "eslint.validate": [
     "javascript",
@@ -60,16 +60,16 @@
     "typescript",
     "typescriptreact"
   ],
-  
+
   // 저장 시 자동 정리
   "editor.trimAutoWhitespace": true,
   "files.trimTrailingWhitespace": true,
   "files.insertFinalNewline": true,
-  
+
   // 디버그 콘솔 설정
   "debug.console.fontSize": 12,
   "debug.console.wordWrap": true,
-  
+
   // 중단점 표시 설정
   "debug.showBreakpointsInOverviewRuler": true,
   "debug.showInlineBreakpointCandidates": true

@@ -23,7 +23,7 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
   connect: (url: string) => {
     const { ws } = get()
     const debug = useDebugStore.getState()
-    
+
     if (ws && ws.readyState === WebSocket.OPEN) {
       debug.info('Connection', '이미 연결되어 있습니다')
       return
@@ -75,8 +75,8 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
           const data = JSON.parse(event.data)
           debug.logWSMessage('received', data)
         } catch {
-          debug.debug('WebSocket', '바이너리 메시지 수신', { 
-            size: event.data.length 
+          debug.debug('WebSocket', '바이너리 메시지 수신', {
+            size: event.data.length
           })
         }
       }
@@ -89,7 +89,7 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
   disconnect: () => {
     const { ws } = get()
     const debug = useDebugStore.getState()
-    
+
     if (ws) {
       debug.info('Connection', '연결 해제 요청')
       ws.close()
@@ -100,7 +100,7 @@ export const useConnectionStore = create<ConnectionStore>((set, get) => ({
   send: (data: any) => {
     const { ws, isConnected } = get()
     const debug = useDebugStore.getState()
-    
+
     if (ws && isConnected) {
       const payload = JSON.stringify(data)
       debug.logWSMessage('sent', data)

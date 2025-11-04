@@ -21,20 +21,20 @@ interface DebugStore {
   logLevel: LogLevel
   isEnabled: boolean
   maxLogs: number
-  
+
   // 로그 메서드
   trace: (category: string, message: string, data?: any) => void
   debug: (category: string, message: string, data?: any) => void
   info: (category: string, message: string, data?: any) => void
   warn: (category: string, message: string, data?: any) => void
   error: (category: string, message: string, data?: any) => void
-  
+
   // WebSocket 전용 로깅
   logWSConnect: (url: string) => void
   logWSDisconnect: (reason?: string) => void
   logWSMessage: (direction: 'sent' | 'received', data: any) => void
   logWSError: (error: any) => void
-  
+
   // 유틸리티
   clearLogs: () => void
   setLogLevel: (level: LogLevel) => void
@@ -65,7 +65,7 @@ export const useDebugStore = create<DebugStore>((set, get) => ({
     }
 
     console.log(`[TRACE][${category}]`, message, data || '')
-    
+
     set({
       logs: [...logs.slice(-maxLogs + 1), entry],
     })
@@ -84,7 +84,7 @@ export const useDebugStore = create<DebugStore>((set, get) => ({
     }
 
     console.log(`[DEBUG][${category}]`, message, data || '')
-    
+
     set({
       logs: [...logs.slice(-maxLogs + 1), entry],
     })
@@ -103,7 +103,7 @@ export const useDebugStore = create<DebugStore>((set, get) => ({
     }
 
     console.info(`[INFO][${category}]`, message, data || '')
-    
+
     set({
       logs: [...logs.slice(-maxLogs + 1), entry],
     })
@@ -122,7 +122,7 @@ export const useDebugStore = create<DebugStore>((set, get) => ({
     }
 
     console.warn(`[WARN][${category}]`, message, data || '')
-    
+
     set({
       logs: [...logs.slice(-maxLogs + 1), entry],
     })
@@ -141,7 +141,7 @@ export const useDebugStore = create<DebugStore>((set, get) => ({
     }
 
     console.error(`[ERROR][${category}]`, message, data || '')
-    
+
     set({
       logs: [...logs.slice(-maxLogs + 1), entry],
     })
@@ -159,10 +159,10 @@ export const useDebugStore = create<DebugStore>((set, get) => ({
   logWSMessage: (direction: 'sent' | 'received', data: any) => {
     const { debug } = get()
     const prefix = direction === 'sent' ? '▶ 송신' : '◀ 수신'
-    
+
     // 데이터 크기 계산
     const size = JSON.stringify(data).length
-    
+
     debug('WebSocket', `${prefix} (${size} bytes)`, {
       direction,
       data,
@@ -216,7 +216,7 @@ if (typeof window !== 'undefined') {
     disable: () => useDebugStore.getState().setEnabled(false),
     LogLevel,
   }
-  
+
   console.log('%c[FTV] 디버그 도구 로드됨', 'color: #00ff00; font-weight: bold')
   console.log('%c사용법: window.__FTV_DEBUG__', 'color: #00ffff')
 }
