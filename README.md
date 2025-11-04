@@ -63,6 +63,25 @@ Forklift Twin Viewer는 지게차 엣지 시스템에서 수집된 센서 데이
        └─ 웹 브라우저 (Chrome, Firefox)
 ```
 
+### 아키텍처 설명
+
+이 프로젝트는 **클라이언트-서버 양방향 통신 구조**를 가집니다:
+
+1. **FTE (Forklift Twin Engine)**: 
+   - Linux PC에서 실행되는 백엔드 엔진/게이트웨이
+   - ROS2 기반으로 지게차의 센서 데이터를 수집하고 전처리
+   - WebSocket 서버를 운영하여 FTV와 통신
+
+2. **통신 프로토콜**:
+   - **PUBLISH (FTE → FTV)**: FTE가 FTV로 실시간 데이터를 일방향으로 푸시. 센서 데이터, 액션 이벤트, 헬스 상태 등을 250ms 주기로 전송
+   - **COMMAND (FTV → FTE)**: FTV가 FTE로 제어 명령을 전송. 센서 파라미터 변경, 임계값 설정, 캘리브레이션 실행 등의 양방향 요청-응답 통신
+
+3. **FTV (Forklift Twin Viewer)**:
+   - Windows PC의 웹 브라우저에서 실행되는 React 기반 프론트엔드
+   - 두 가지 주요 역할을 수행:
+     - **실시간 데이터 시각화**: WebSocket으로 수신한 데이터를 대시보드, 차트, 타임라인으로 표시
+     - **센서 세팅 도구**: 엔지니어가 웹 UI를 통해 지게차 센서를 원격으로 설정/조정
+
 ### 기술 스택
 
 - **프론트엔드**: React 18 + TypeScript + Vite
@@ -97,7 +116,7 @@ wss://<host>:<port>/ws (subprotocol: fte.v1)
 
 ### 필요 사항
 
-- Node.js 18+ 
+- Node.js 18+
 - npm 또는 yarn
 - 실행 중인 Forklift Twin Engine (FTE)
 
@@ -218,10 +237,10 @@ npm run test:coverage
 server {
     listen 80;
     server_name ftv.example.com;
-    
+
     root /var/www/forklift-twin-viewer/dist;
     index index.html;
-    
+
     location / {
         try_files $uri $uri/ /index.html;
     }

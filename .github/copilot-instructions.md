@@ -15,15 +15,15 @@
 ```
 ┌───────────────────────────────────────────────────────────┐
 │           FTE (Forklift Twin Engine)                      │
-│           엔진 / 게이트웨이                                   │
-└─┬─────────────────────────────────────────────────────┬─┘
+│           엔진 / 게이트웨이                                 │
+└─┬─────────────────────────────────────────────────────┬───┘
   │                                                     │
   │ wss:// (PUBLISH)                      wss:// (COMMAND)
   │ 실시간 데이터 스트림                         설정/제어 명령
   ↓                                                     ↑
 ┌───────────────────────────────────────────────────────────┐
 │           FTV (Forklift Twin Viewer)                      │
-│           뷰어 및 지게차 센서 세팅 도구                         │
+│           뷰어 및 지게차 센서 세팅 도구                       │
 │                                                           │
 │  [실시간 데이터 시각화]    [센서 세팅 기능]                    │
 │  - 대시보드              - 파라미터 조정                      │
@@ -31,6 +31,25 @@
 │  - 이벤트 타임라인        - 캘리브레이션                       │
 └───────────────────────────────────────────────────────────┘
 ```
+
+### 아키텍처 설명
+
+이 프로젝트는 **클라이언트-서버 양방향 통신 구조**를 가집니다:
+
+1. **FTE (Forklift Twin Engine)**: 
+   - Linux PC에서 실행되는 백엔드 엔진/게이트웨이
+   - ROS2 기반으로 지게차의 센서 데이터를 수집하고 전처리
+   - WebSocket 서버를 운영하여 FTV와 통신
+
+2. **통신 프로토콜**:
+   - **PUBLISH (FTE → FTV)**: FTE가 FTV로 실시간 데이터를 일방향으로 푸시. 센서 데이터, 액션 이벤트, 헬스 상태 등을 250ms 주기로 전송
+   - **COMMAND (FTV → FTE)**: FTV가 FTE로 제어 명령을 전송. 센서 파라미터 변경, 임계값 설정, 캘리브레이션 실행 등의 양방향 요청-응답 통신
+
+3. **FTV (Forklift Twin Viewer)**:
+   - Windows PC의 웹 브라우저에서 실행되는 React 기반 프론트엔드
+   - 두 가지 주요 역할을 수행:
+     - **실시간 데이터 시각화**: WebSocket으로 수신한 데이터를 대시보드, 차트, 타임라인으로 표시
+     - **센서 세팅 도구**: 엔지니어가 웹 UI를 통해 지게차 센서를 원격으로 설정/조정
 
 ### 주요 기능
 - **실시간 데이터 시각화**: WebSocket을 통한 센서 데이터 모니터링
@@ -92,7 +111,7 @@ export default function Dashboard({ connectionStatus, onRefresh }: DashboardProp
 // ✅ 좋은 예
 export const useDataStore = create<DataStore>((set) => ({
   sensors: [],
-  updateSensors: (newSensors) => 
+  updateSensors: (newSensors) =>
     set((state) => ({ sensors: [...state.sensors, ...newSensors] })),
 }));
 ```
@@ -109,7 +128,7 @@ export const useDataStore = create<DataStore>((set) => ({
 useEffect(() => {
   const ws = connectionStore.getState().websocket;
   ws?.send(JSON.stringify({ type: 'SUB', channel: 'actions.event' }));
-  
+
   return () => {
     ws?.send(JSON.stringify({ type: 'UNSUB', channel: 'actions.event' }));
   };
@@ -260,5 +279,5 @@ feat:차트추가 (공백 누락)
 
 ---
 
-**마지막 업데이트**: 2025-11-04  
+**마지막 업데이트**: 2025-11-04
 **작성자**: watanowDev
